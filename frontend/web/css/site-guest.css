@@ -1,0 +1,21 @@
+/*настройки только для гостевой части
+(подключаем локально в header-guest.php)*/
+
+/*убираем пространство для меню слева*/
+.content-wrapper, .main-footer {
+    margin-left:  0px !important;
+}
+/*меняем фон слева*/
+.skin-blue .main-header .logo {
+    background-color: #3c8dbc !important;
+}
+/*пирожок смещаем влево*/
+.navbar-toggle {
+    float: left !important;
+}
+/*убираем прыжки правого меню*/
+@media(max-width:991px) {
+    .navbar-collapse.pull-left + .navbar-custom-menu {
+        right: 0px !important;
+    }
+}

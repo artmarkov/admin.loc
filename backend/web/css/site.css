@@ -1,0 +1,25 @@
+/*подключаем шрифты*/
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
+
+/*кастомизация скина в черный цвет*/
+.skin-blue .main-header .navbar , .skin-blue .main-header .logo {
+    background-color: #222d32 !important;
+}
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+    background-color: #1a2226 !important;
+}
+.skin-blue .main-header .logo {
+    background-color: #222d32 !important;
+
+}
+.skin-blue .main-header li.user-header {
+    background-color: #222d32 !important;
+}
+
+@media (max-width: 767px) {
+
+    .skin-blue .main-header .navbar .dropdown-menu li a:hover {
+        background: #1a2226 !important;
+    }
+}
+/*...кастомизация скина в черный цвет*/
