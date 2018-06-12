@@ -1,9 +1,10 @@
 <?php
-namespace common\models;
+namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
+use common\models\User;
 /**
  * Login form
  */
