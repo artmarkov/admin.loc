@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\captcha\Captcha;
 
 $this->title = 'Сброс пароля';
 $this->params['breadcrumbs'][] = $this->title;
@@ -34,6 +35,17 @@ $fieldOptions2 = [
             </div>
             <div class="form-group">
                 <?= $form->field($model, 'email', $fieldOptions2)->textInput(['autofocus' => true]) ?>
+            </div>
+            <div class="form-group">
+                <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+                ]) ?>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label>
+                    <?= 'Забыли Имя пользователя? Нажмите ' . Html::a('сюда', ['site/request-login-reset']); ?>
+                </label>
             </div>
             <div class="form-group">
                 <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary btn-block']) ?>

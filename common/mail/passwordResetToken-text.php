@@ -5,8 +5,10 @@
 
 $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
 ?>
-Здравствуйте, <?= $user->username ?>.
+Здравствуйте, <?= $user->username ?>. *
 
 Пройдите по ссылке для сброса пароля:
 
 <?= $resetLink ?>
+
+* Создано автоматически. Пожалуйста не отвечайте на данное письмо.

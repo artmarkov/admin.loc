@@ -12,7 +12,7 @@ class PasswordResetRequestForm extends Model
 {
     public $email;
     public $username;
-
+    public $verifyCode;
 
     /**
      * @inheritdoc
@@ -23,16 +23,15 @@ class PasswordResetRequestForm extends Model
             [['email','username'], 'trim'],
             [['email','username'], 'required'],
             ['email', 'email'],
-            ['email', 'exist',
-                'targetClass' => '\common\models\User',
-                'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => \Yii::t('app', 'There is no user with this email address.')
-            ],
             ['username', 'exist',
+                'targetAttribute' => ['email','username'],
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => \Yii::t('app', 'There is no user with this name.')
+                'message' => \Yii::t('app', 'User with entered data not found or blocked.')
             ],
+            // verifyCode needs to be entered correctly
+            ['verifyCode', 'captcha'],
+
         ];
     }
 
@@ -41,6 +40,7 @@ class PasswordResetRequestForm extends Model
         return [
             'username' => \Yii::t('app', 'Username'),
             'password' => \Yii::t('app', 'Password'),
+            'verifyCode' => \Yii::t('app', 'Verification Code'),
         ];
     }
     /**
@@ -73,9 +73,9 @@ class PasswordResetRequestForm extends Model
                 ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
                 ['user' => $user]
             )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setFrom([Yii::$app->params['supportEmail'] =>  'Робот ' . Yii::$app->name])
             ->setTo($this->email)
-            ->setSubject(\Yii::t('app', 'Password reset for ' . Yii::$app->name . ''))
+            ->setSubject('Сброс пароля для ' . Yii::$app->name)
             ->send();
     }
 }

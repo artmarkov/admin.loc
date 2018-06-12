@@ -127,6 +127,7 @@ return [
     'No events found' => 'Событий нет',
     'Not Active' => 'Неактивно',
     'Not Published' => 'Не опубликовано',
+    'User with entered data not found or blocked.' => 'Пользователь с введенными данными не найден или заблокирован.',
     'Number of cores' => 'Кол-во ядер',
     'OS Release' => 'Версия ОС',
     'OS' => 'ОС',

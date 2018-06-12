@@ -285,10 +285,11 @@ use yii\helpers\Url;
                         </li>
                     </ul>
                 </li>
-                <li><?= Html::a(
+                <li>
+                    <?= Html::a(
                         '<i class="fa fa-sign-out"></i>',
                         ['/site/logout'],
-                        ['data-method' => 'post','title' => 'Выход']
+                        ['data-method' => 'post', 'title' => 'Выход']
                     ) ?>
                 </li>
             </ul>

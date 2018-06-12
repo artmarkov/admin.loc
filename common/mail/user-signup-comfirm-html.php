@@ -4,7 +4,15 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['site/signup-confirm', 
 
 ?>
 <div class="password-reset">
-    <p>Здравствуйте, <?= Html::encode($user->username) ?>.</p>
+    <p>Здравствуйте, <?= Html::encode($user->username) ?>. *</p>
+
     <p>Пройдите по ссылке для подтверждения email:</p>
+
     <p><?= Html::a(Html::encode($confirmLink), $confirmLink) ?></p>
+
+    <p></p>
+
+    <hr>
+
+    <p>* Создано автоматически. Пожалуйста не отвечайте на данное письмо.</p>
 </div>

@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\captcha\Captcha;
 
 $this->title = 'Добро пожаловать в ЛК';
 $this->params['breadcrumbs'][] = $this->title;
@@ -43,6 +44,11 @@ $fieldOptions2 = [
                             <?= $form->field($model, 'rememberMe')->checkbox() ?>
                         </label>
                     </div>
+                </div>
+                <div class="form-group">
+                    <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                        'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+                    ]) ?>
                 </div>
                 <hr>
                 <div class="form-group">
