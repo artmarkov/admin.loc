@@ -38,9 +38,9 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'cacheFrontend' => [ // для очистки кэша frontend Yii::$app->cacheFrontend->delete('manufacturer'); //очищаем кэш с данными о производителях
+        'cacheBackend' => [
             'class' => 'yii\caching\FileCache',
-            'cachePath' => Yii::getAlias('@frontend') . '/runtime/cache'
+            'cachePath' => Yii::getAlias('@backend') . '/runtime/cache'
         ],
         /*
         'urlManager' => [

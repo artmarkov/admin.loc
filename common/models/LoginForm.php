@@ -3,7 +3,7 @@ namespace common\models;
 
 use Yii;
 use yii\base\Model;
-
+use himiklab\yii2\recaptcha\ReCaptchaValidator;
 /**
  * Login form
  */
@@ -12,7 +12,8 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
-    public $verifyCode;
+//    public $verifyCode;
+    public $reCaptcha;
     private $_user;
 
 
@@ -29,7 +30,12 @@ class LoginForm extends Model
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
             // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
+//            ['verifyCode', 'captcha'],
+            [
+                ['reCaptcha'], ReCaptchaValidator::className(),
+                'secret' => '6Lf6gV4UAAAAANvOPDtx_2obe-hxVKnbeDjUCcfI',
+                'uncheckedMessage' => \Yii::t('app', 'Please confirm that you are not a bot.')
+            ],
         ];
     }
     public function attributeLabels()
@@ -38,7 +44,8 @@ class LoginForm extends Model
             'username' => \Yii::t('app', 'Username'),
             'password' => \Yii::t('app', 'Password'),
             'rememberMe' => \Yii::t('app', 'Remember Me'),
-            'verifyCode' => \Yii::t('app', 'Verification Code'),
+//            'verifyCode' => \Yii::t('app', 'Verification Code'),
+            'reCaptcha' => \Yii::t('app', 'reCaptcha'),
         ];
     }
     /**

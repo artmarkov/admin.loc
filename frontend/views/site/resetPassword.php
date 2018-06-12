@@ -14,23 +14,25 @@ $fieldOptions = [
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
 ];
 ?>
-<div class="container">
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
-        </div>
-        <div class="box-body">
-            <p class="text-muted">Пожалуйста введите новый пароль:</p>
-            <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-            <div class="form-group">
-                <?= $form->field($model, 'password',$fieldOptions)->passwordInput(['autofocus' => true]) ?>
+<section class="content">
+    <div class="row">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
             </div>
-            <div class="form-group">
-                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary btn-block']) ?>
+            <div class="box-body">
+                <p class="text-muted">Пожалуйста введите новый пароль:</p>
+                <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
+                <div class="form-group">
+                    <?= $form->field($model, 'password', $fieldOptions)->passwordInput(['autofocus' => true]) ?>
+                </div>
+                <div class="form-group">
+                    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary btn-block']) ?>
+                </div>
             </div>
-        </div>
-        <?php ActiveForm::end(); ?>
+            <?php ActiveForm::end(); ?>
 
-        <hr>
+            <hr>
+        </div>
     </div>
-</div>
+</section>

@@ -41,6 +41,7 @@ use yii\helpers\Html;
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Posts', 'icon' => 'paper-plane', 'url' => ['/post']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
+                    ['label' => 'Обратная связь', 'icon' => 'map-marker', 'url' => ['/site/contact']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Some tools',

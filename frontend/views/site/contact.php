@@ -8,38 +8,50 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
-$this->title = 'Contact';
+$this->title = \Yii::t('app', 'Feedback');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-contact">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
-    </p>
-
+<!--<div class="site-contact">-->
+<section class="content">
     <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
-
-                <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'email') ?>
-
-                <?= $form->field($model, 'subject') ?>
-
-                <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
-
-                <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                ]) ?>
-
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
+            </div>
+            <div class="box-body">
+                <p class="text-muted">
+                    <?= \Yii::t('app', 'If you have questions, please fill out the following form to contact us. Thank you.'); ?>
+                </p>
+                <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
                 </div>
+                <div class="form-group">
 
-            <?php ActiveForm::end(); ?>
+                    <?= $form->field($model, 'email') ?>
+                </div>
+                <div class="form-group">
+
+                    <?= $form->field($model, 'subject') ?>
+                </div>
+                <div class="form-group">
+
+                    <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
+                </div>
+                <div class="form-group">
+
+                    <? /*= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+                ]) */ ?>
+                    <?= $this->render('@common/widgets/views/_captcha', ['model' => $model, 'form' => $form]) ?>
+                    <hr>
+                    <div class="form-group">
+                        <?= Html::submitButton(\Yii::t('app', 'Submit'), ['class' => 'btn btn-primary btn-block', 'name' => 'contact-button']) ?>
+                    </div>
+
+                    <?php ActiveForm::end(); ?>
+                </div>
+            </div>
         </div>
     </div>
-
-</div>
+</section>

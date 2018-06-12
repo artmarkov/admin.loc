@@ -4,6 +4,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use common\models\User;
+use himiklab\yii2\recaptcha\ReCaptchaValidator;
 
 /**
  * Password reset request form
@@ -12,7 +13,8 @@ class PasswordResetRequestForm extends Model
 {
     public $email;
     public $username;
-    public $verifyCode;
+//    public $verifyCode;
+    public $reCaptcha;
 
     /**
      * @inheritdoc
@@ -30,8 +32,12 @@ class PasswordResetRequestForm extends Model
                 'message' => \Yii::t('app', 'User with entered data not found or blocked.')
             ],
             // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
-
+//            ['verifyCode', 'captcha'],
+            [
+                ['reCaptcha'], ReCaptchaValidator::className(),
+                'secret' => '6Lf6gV4UAAAAANvOPDtx_2obe-hxVKnbeDjUCcfI',
+                'uncheckedMessage' => \Yii::t('app', 'Please confirm that you are not a bot.')
+            ],
         ];
     }
 
@@ -40,7 +46,8 @@ class PasswordResetRequestForm extends Model
         return [
             'username' => \Yii::t('app', 'Username'),
             'password' => \Yii::t('app', 'Password'),
-            'verifyCode' => \Yii::t('app', 'Verification Code'),
+//            'verifyCode' => \Yii::t('app', 'Verification Code'),
+            'reCaptcha' => \Yii::t('app', 'reCaptcha'),
         ];
     }
     /**
