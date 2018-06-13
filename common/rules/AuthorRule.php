@@ -8,7 +8,6 @@ class AuthorRule extends Rule {
 
     public function execute($user_id, $item, $params)
     {
-        if(isset($params['user_id']) and  $params['user_id'] == $user_id) return true;
-        else return false;
+        return isset($params['post']) ? $params['post']->author_id == $user_id : false;
     }
 }

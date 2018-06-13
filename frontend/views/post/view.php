@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Yii::$app->user->id ?>(<?= Yii::$app->user->identity->username ?>)</h1>
 
     <p>
-       <?php  if(\Yii::$app->user->can('updatePost', ['user_id' => $model->author_id])): ?>
+       <?php  if (\Yii::$app->user->can('updatePost', ['post' => $model])): ?>
 
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [

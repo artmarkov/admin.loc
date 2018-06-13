@@ -39,18 +39,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
                 </div>
                 <div class="form-group">
-
                     <? /*= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
                     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
                 ]) */ ?>
                     <?= $this->render('@common/widgets/views/_captcha', ['model' => $model, 'form' => $form]) ?>
-                    <hr>
-                    <div class="form-group">
-                        <?= Html::submitButton(\Yii::t('app', 'Submit'), ['class' => 'btn btn-primary btn-block', 'name' => 'contact-button']) ?>
-                    </div>
-
-                    <?php ActiveForm::end(); ?>
                 </div>
+                <hr>
+                <div class="form-group">
+                    <?= Html::submitButton(\Yii::t('app', 'Submit'), ['class' => 'btn btn-primary btn-block', 'name' => 'contact-button']) ?>
+                </div>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
