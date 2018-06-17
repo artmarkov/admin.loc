@@ -23,6 +23,7 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    const STATUS_INIT = 1;
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
     const STATUS_WAIT = 5;
@@ -51,8 +52,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_DELETED, self::STATUS_WAIT, self::STATUS_ACTIVE]],
+            ['status', 'default', 'value' => self::STATUS_INIT],
+            ['status', 'in', 'range' => [self::STATUS_INIT, self::STATUS_DELETED, self::STATUS_WAIT, self::STATUS_ACTIVE]],
         ];
     }
 
@@ -185,4 +186,5 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
 }

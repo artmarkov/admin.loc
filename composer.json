@@ -21,7 +21,9 @@
     "dmstr/yii2-adminlte-asset": "2.*",
     "almasaeed2010/adminlte": "~2.4",
     "bower-asset/bootbox": "*",
-    "himiklab/yii2-recaptcha-widget": "*"
+    "himiklab/yii2-recaptcha-widget": "*",
+    "2amigos/yii2-transliterator-helper": "*",
+    "la-haute-societe/yii2-save-relations-behavior": "^1.4"
 
   },
   "require-dev": {

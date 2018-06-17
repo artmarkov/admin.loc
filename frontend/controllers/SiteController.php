@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\SignupFindForm;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -11,7 +12,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use app\controllers\AppController;
 use common\services\auth\SignupService;
-
+use dosamigos\transliterator\TransliteratorHelper;
 /**
  * Site controller
  */
@@ -148,6 +149,23 @@ class SiteController extends AppController
              'model' => $model,
          ]);
      }*/
+    public  function actionSignupFind()
+    {
+        $model = new SignupFindForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($username =  TransliteratorHelper::process('марков-ав', '', 'en')) {
+                Yii::$app->session->setFlash('success', \Yii::t('app', 'Ok.'));
+
+        //        return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', \Yii::t('app', 'Sorry.'));
+            }
+        }
+        return $this->render('signupFind', ['model' => $model,]);
+    }
+
+
     public function actionSignup()
     {
         $form = new SignupForm();
