@@ -13,13 +13,26 @@ use common\models\User;
 
 class SignupFindForm extends Model
 {
-
+   // public $id;
+    public $error;
     public $surname;
     public $name;
     public $patronymic;
     public $birthday;
 
-
+    public function behaviors()
+    {
+        return [
+            'SignupBehavior' => [
+                'class' => 'common\components\SignupBehavior',
+                'surname' => 'surname',
+                'name' => 'name',
+                'patronymic' => 'patronymic',
+                'birthday' => 'birthday',
+                'error' => 'error',
+            ]
+        ];
+    }
     /**
      * @inheritdoc
      */
@@ -39,23 +52,5 @@ class SignupFindForm extends Model
             'patronymic' => \Yii::t('app', 'Patronymic'),
             'birthday' => \Yii::t('app', 'Birthday'),
         ];
-    }
-
-    public function getUsername()
-    {
-        /* @var $user User */
-        $user = User::findOne([
-            'status' => User::STATUS_INIT,
-            'surname' => $this->surname,
-            'name' => $this->name,
-            'patronymic' => $this->patronymic,
-            'birthday' => $this->birthday,
-        ]);
-
-        if (!$user) {
-            return false;
-        }
-
-        return true;
     }
 }
