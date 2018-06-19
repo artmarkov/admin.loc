@@ -154,10 +154,12 @@ class SiteController extends AppController
         $model = new SignupFindForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($username =  TransliteratorHelper::process('марков-ав', '', 'en')) {
-                Yii::$app->session->setFlash('success', \Yii::t('app', 'Ok.'));
+            if (!$model->error == false) {
+               echo '<pre>';
+           var_dump($model);
+               // Yii::$app->session->setFlash('success', \Yii::t('app', 'Ok.'));
 
-        //        return $this->goHome();
+               //return $this->goHome();
             } else {
                 Yii::$app->session->setFlash('error', \Yii::t('app', 'Sorry.'));
             }
