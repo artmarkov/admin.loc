@@ -169,6 +169,7 @@ class SiteController extends AppController
     public function actionSignup()
     {
         $form = new SignupForm();
+        $form->setAttributes([ 'username' => 'markov-av1']);
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $signupService = new SignupService();
             try {
