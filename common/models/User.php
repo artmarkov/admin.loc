@@ -6,7 +6,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-
+use dosamigos\transliterator\TransliteratorHelper;
 /**
  * User model
  *
@@ -99,6 +99,44 @@ class User extends ActiveRecord implements IdentityInterface
             'password_reset_token' => $token,
             'status' => self::STATUS_ACTIVE,
         ]);
+    }
+
+    public static function findById($id)
+    {
+        return static::findOne([
+            'id' => $id,
+            'status' => self::STATUS_INIT,
+        ]);
+    }
+
+    public static function findByFio($surname, $name, $patronymic, $birthday)
+    {
+        return static::findOne([
+            'surname' => $surname,
+            'name' => $name,
+            'patronymic' => $patronymic,
+            'birthday' => $birthday,
+            'status' => self::STATUS_INIT,
+        ]);
+    }
+
+    public static function getUsername($surname, $name, $patronymic)
+    {
+        $surname = TransliteratorHelper::process(mb_strtolower($surname), 'UTF-8');
+        $name = TransliteratorHelper::process(mb_strtolower($name), 'UTF-8');
+        $patronymic = TransliteratorHelper::process(mb_strtolower($patronymic), 'UTF-8');
+
+        $count = strlen($name) + 1;
+
+        for ($i = 1; $i < $count; $i++) {
+            $username = $surname . '-' . substr($name, 0, $i) . substr($patronymic, 0, 1);
+
+            if (!static::findByUsername($username)) {
+                break;
+            }
+        }
+
+        return $username;
     }
 
     /**
