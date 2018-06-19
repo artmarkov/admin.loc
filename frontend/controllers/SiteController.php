@@ -1,8 +1,9 @@
 <?php
 namespace frontend\controllers;
 
-use frontend\models\SignupFindForm;
 use Yii;
+use common\models\User;
+use frontend\models\SignupFindForm;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use frontend\models\LoginForm;
@@ -13,6 +14,7 @@ use frontend\models\ContactForm;
 use app\controllers\AppController;
 use common\services\auth\SignupService;
 use dosamigos\transliterator\TransliteratorHelper;
+
 /**
  * Site controller
  */
@@ -28,10 +30,10 @@ class SiteController extends AppController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-           /* 'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],*/
+            /* 'captcha' => [
+                 'class' => 'yii\captcha\CaptchaAction',
+                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+             ],*/
         ];
     }
 
@@ -134,44 +136,39 @@ class SiteController extends AppController
      *
      * @return mixed
      */
-    /* public function actionSignup()
-     {
-         $model = new SignupForm();
-         if ($model->load(Yii::$app->request->post())) {
-             if ($user = $model->signup()) {
-                 if (Yii::$app->getUser()->login($user)) {
-                     return $this->goHome();
-                 }
-             }
-         }
 
-         return $this->render('signup', [
-             'model' => $model,
-         ]);
-     }*/
-    public  function actionSignupFind()
+    public function actionSignupFind()
     {
         $model = new SignupFindForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if (!$model->error == false) {
-               echo '<pre>';
-           var_dump($model);
-               // Yii::$app->session->setFlash('success', \Yii::t('app', 'Ok.'));
-
-               //return $this->goHome();
+            $user = User::findOne([
+                'status' => User::STATUS_INIT,
+                'surname' => $model->surname,
+                'name' => $model->name,
+                'patronymic' => $model->patronymic,
+                'birthday' => $model->birthday,
+            ]);
+            if ($user) {
+                Yii::$app->session->setFlash('success', \Yii::t('app', 'Логин успешно сгенерирован. Продолжите регистрацию.'));
+                return $this->redirect(['signup', 'id' => $user->id]);
             } else {
-                Yii::$app->session->setFlash('error', \Yii::t('app', 'Sorry.'));
+                Yii::$app->session->setFlash('error', \Yii::t('app', 'Пользователь в системе не найден или заблокирован.'));
             }
         }
         return $this->render('signupFind', ['model' => $model,]);
     }
-
-
-    public function actionSignup()
+    /**
+     *
+     *
+     *
+     */
+    public function actionSignup($id)
     {
+        $user = User::findOne($id);
         $form = new SignupForm();
-        $form->setAttributes([ 'username' => 'markov-av1']);
+        $form->setAttributes(['username' => $user->username, 'id' => $user->id]);
+
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             $signupService = new SignupService();
             try {

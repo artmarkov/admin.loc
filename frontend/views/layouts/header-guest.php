@@ -45,7 +45,7 @@ $this->registerCssFile('\css\site-guest.css  ');
             <ul class="nav navbar-nav">
                 <li class="active"><a title="Главная" href="<?= Url::to(['/site/index']) ?>"><i class="fa fa-home"></i></a>
                 </li>
-                <li><a title="Регистрация" href="<?= Url::to(['/site/signup']) ?>"><i class="fa fa-user-plus"></i></a>
+                <li><a title="Регистрация" href="<?= Url::to(['/site/signup-find']) ?>"><i class="fa fa-user-plus"></i></a>
                 </li>
                 <li><a title="Вход в ЛК" href="<?= Url::to(['/site/login']) ?>"><i class="fa fa-sign-in"></i></a></li>
             </ul>

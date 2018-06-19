@@ -9,6 +9,7 @@ use common\models\User;
  */
 class SignupForm extends Model
 {
+    public $id;
     public $username;
     public $email;
     public $password;
@@ -20,16 +21,18 @@ class SignupForm extends Model
     public function rules()
     {
         return [
+            ['id', 'required'],// делаем update по ключу
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => \Yii::t('app', 'This username has already been taken.')],
+           // ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => \Yii::t('app', 'This username has already been taken.')],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => \Yii::t('app', 'This email address has already been taken.')],
+            // разрешаем регистрацию если емайл уже есть
+           // ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => \Yii::t('app', 'This email address has already been taken.')],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],

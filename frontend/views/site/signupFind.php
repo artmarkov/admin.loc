@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup-find']); ?>
 
-            <?= $form->field($model, 'surname')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'surname') ?>
 
             <?= $form->field($model, 'name') ?>
 
@@ -28,10 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'birthday') ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'find-button', 'value' => 'find']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
+<?php /*$form = ActiveForm::begin([ 'id' => 'form', 'method' => 'POST',
+    'action' => 'action.php',
+    'options' => ['style' => 'width: 100%;', 'autocomplete' => 'off']
+]);*/?>

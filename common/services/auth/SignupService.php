@@ -2,6 +2,7 @@
 
 namespace common\services\auth;
 
+use frontend\models\SignupFindForm;
 use Yii;
 use common\models\User;
 use frontend\models\SignupForm;
@@ -10,14 +11,16 @@ class SignupService
 {
     public function signup(SignupForm $form)
     {
-        $user = new User();
+        //$user = new User();
+        $user = User::findOne($form->id);
         $user->username = $form->username;
         $user->generateAuthKey();
         $user->setPassword($form->password);
         $user->email = $form->email;
         $user->email_confirm_token = Yii::$app->security->generateRandomString();
         $user->status = User::STATUS_WAIT;
-
+//        echo '<pre>';
+//        var_dump($user);
         if (!$user->save()) {
             throw new \RuntimeException('Saving error.');
         }
@@ -63,4 +66,6 @@ class SignupService
             throw new \RuntimeException('Error authentication.');
         }
     }
+
+
 }

@@ -14,13 +14,13 @@ use common\models\User;
 class SignupFindForm extends Model
 {
    // public $id;
-    public $error;
+    //public $error;
     public $surname;
     public $name;
     public $patronymic;
     public $birthday;
 
-    public function behaviors()
+    /*public function behaviors()
     {
         return [
             'SignupBehavior' => [
@@ -32,7 +32,7 @@ class SignupFindForm extends Model
                 'error' => 'error',
             ]
         ];
-    }
+    }*/
     /**
      * @inheritdoc
      */
