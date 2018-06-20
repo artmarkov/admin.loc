@@ -7,6 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use dosamigos\transliterator\TransliteratorHelper;
+
 /**
  * User model
  *
@@ -83,6 +84,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['username' => $username]);
     }
+
     /**
      * Finds user by password reset token
      *
@@ -109,34 +111,45 @@ class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    public static function findByFio($surname, $name, $patronymic, $birthday)
+    public static function findByAuthKey($auth_key)
+    {
+        return static::findOne([
+            'auth_key' => $auth_key,
+            'status' => self::STATUS_INIT,
+        ]);
+    }
+
+    public static function findByFio($surname, $name, $patronymic, $birthday, $status)
     {
         return static::findOne([
             'surname' => $surname,
             'name' => $name,
             'patronymic' => $patronymic,
             'birthday' => $birthday,
-            'status' => self::STATUS_INIT,
+            'status' => $status,
         ]);
     }
 
-    public static function getUsername($surname, $name, $patronymic)
+    public static function generateUsername($surname, $name, $patronymic)
     {
-        $surname = TransliteratorHelper::process(mb_strtolower($surname), 'UTF-8');
-        $name = TransliteratorHelper::process(mb_strtolower($name), 'UTF-8');
-        $patronymic = TransliteratorHelper::process(mb_strtolower($patronymic), 'UTF-8');
+        $surname = static::slug($surname);
+        $name = static::slug($name);
+        $patronymic = static::slug($patronymic);
 
-        $count = strlen($name) + 1;
+        $i = 0;
 
-        for ($i = 1; $i < $count; $i++) {
-            $username = $surname . '-' . substr($name, 0, $i) . substr($patronymic, 0, 1);
-
-            if (!static::findByUsername($username)) {
-                break;
-            }
-        }
+        do {
+            $username = $surname . '-' . substr($name, 0, ++$i) . substr($patronymic, 0, 1);
+        } while (static::findByUsername($username));
 
         return $username;
+    }
+
+    protected static function slug($string, $replacement = '-', $lowercase = true)
+    {
+        $string = preg_replace('/[^\p{L}\p{Nd}]+/u', $replacement, $string);
+        $string = TransliteratorHelper::process($string, 'UTF-8');
+        return $lowercase ? mb_strtolower($string) : $string;
     }
 
     /**

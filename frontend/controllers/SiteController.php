@@ -128,9 +128,9 @@ class SiteController extends AppController
         $model = new SignupFindForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $user = User::findByFio($model->surname, $model->name, $model->patronymic, $model->birthday);
+            $user = User::findByFio($model->surname, $model->name, $model->patronymic, $model->birthday, User::STATUS_INIT);
             if ($user) {
-                return $this->redirect(['signup', 'id' => $user->id]);
+                return $this->redirect(['signup', 'auth_key' => $user->auth_key]);
             } else {
                 Yii::$app->session->setFlash('error', \Yii::t('app', 'Пользователь в системе не найден или заблокирован.'));
             }
@@ -142,12 +142,16 @@ class SiteController extends AppController
      *
      *
      */
-    public function actionSignup($id)
+    public function actionSignup($auth_key)
     {
-        $user = User::findById($id);
+        $user = User::findByAuthKey($auth_key);
+        if (!$user) {
+            Yii::$app->session->setFlash('error', \Yii::t('app', 'Неправильная контрольная сумма.'));
+            return $this->goHome();
+        }
         $form = new SignupForm();
         if (empty($user->username)) {
-            $username = User::getUsername($user->surname, $user->name, $user->patronymic);
+            $username = User::generateUsername($user->surname, $user->name, $user->patronymic);
         } else {
             $username = $user->username;
         }
