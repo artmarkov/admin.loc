@@ -36,8 +36,8 @@ class UserInit extends User
 {
     const ROLE_STAFF = 10;
     const ROLE_TEACHER = 20;
-    const ROLE_STUDENT = 50;
-    const ROLE_PARENT = 100;
+    const ROLE_STUDENT = 30;
+    const ROLE_PARENT = 40;
     /**
      * {@inheritdoc}
      */
